@@ -22,6 +22,13 @@ Visualizacion::Visualizacion()
     ventana->SetSize ( 1366, 670 );
     interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
     interactor->SetRenderWindow ( ventana );
+
+	textActor =	vtkSmartPointer<vtkTextActor>::New();
+	textActor->SetInput("Hola");
+	textActor->SetPosition2(10, 40);
+	textActor->GetTextProperty()->SetFontSize(24);
+	textActor->GetTextProperty()->SetColor(1.0, 0.0, 0.0);
+
 }
 
 Visualizacion::~Visualizacion()
@@ -32,8 +39,7 @@ void Visualizacion::mostrarObjetoInicial ( )
 {
 
 	mapper->SetInputConnection(object->GetOutputPort());
-    actor->SetMapper ( mapper );
-    
+    actor->SetMapper ( mapper );    
 
     mapperEsfera->SetInputConnection ( esferaDeformar->GetOutputPort() );
     actorEsfera->SetMapper ( mapperEsfera );
@@ -42,6 +48,7 @@ void Visualizacion::mostrarObjetoInicial ( )
 
 	renderer->AddActor(actor);
 	renderer->AddActor ( actorEsfera );
+	renderer->AddActor2D(textActor);
 	renderer->SetActiveCamera(camera);
 
     ventana->AddRenderer ( renderer );
@@ -131,5 +138,6 @@ void Visualizacion::ubicacionEsferaDeformacion ( double x, double y )
 }
 
 void Visualizacion::gestoActual(std::string gesto){
-
+	textActor->SetInput(gesto.c_str());
+	ventana->Render();
 }

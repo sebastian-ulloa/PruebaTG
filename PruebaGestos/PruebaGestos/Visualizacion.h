@@ -14,6 +14,9 @@
 #include <vtkSphereSource.h>
 #include <vtkTransform.h>
 #include <vtkKdTree.h>
+#include <vtkTextActor.h>
+#include <vtkTextProperty.h>
+
 class Visualizacion
 {
 public:
@@ -40,4 +43,5 @@ private:
     vtkSmartPointer<vtkRenderWindow> ventana;
     vtkSmartPointer<vtkRenderWindowInteractor> interactor;
     vtkSmartPointer<vtkCamera> camera;
+	vtkSmartPointer<vtkTextActor> textActor;
 };
