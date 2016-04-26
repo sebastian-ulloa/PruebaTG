@@ -1,39 +1,14 @@
 #pragma once
+
 #include "ole2.h"
 #include <Windows.h>
 #include <NuiApi.h>
 #include <math.h>
-#include "ManejadorGestos.h"
 #include <vector>
-#include <iostream>
 
+#include "ManejadorGestos.h"
+#include "Prueba.h"
 
-#ifndef _GESTO_
-#define _GESTO_
-typedef
-enum _GESTO
-{
-    MANO_DERECHA_ARRIBA = 1,
-    MANO_IZQUIERDA_ARRIBA = 2,
-
-    ROTAR_DERECHA = 3,
-    ROTAR_IZQUIERDA = 4,
-    ROTAR_ARRIBA = 5,
-    ROTAR_ABAJO = 6,
-
-    MANOS_ARRIBA = 7,
-
-    ZOOM_IN = 8,
-    ZOOM_OUT = 9,
-
-    MOVER_DERECHA = 10,
-    MOVER_IZQUIERDA = 11,
-    MOVER_ARRIBA = 12,
-    MOVER_ABAJO = 13,
-    NO_GESTO = 0
-} 	GESTO;
-
-#endif _GESTO_
 
 class Kinect
 {
@@ -42,15 +17,16 @@ public:
     ~Kinect();
     void inicializar();
 private:
+	Prueba p;
     int empezarGesto;
     GESTO gesto;
     INuiSensor* sensor;
     HANDLE m_hNextSkeletonEvent;
+    Visualizacion *visualizacion;
     bool identificador;
     float distanciaInicial;
     float inicialDerechaY;
     float inicialIzquierdaY;
-    void deformar();
     bool inicializarKinect();
     float redondear ( float n );
     void deteccion();

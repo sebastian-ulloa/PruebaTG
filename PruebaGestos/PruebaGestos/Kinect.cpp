@@ -3,9 +3,12 @@
 
 Kinect::Kinect()
 {
+    visualizacion = new Visualizacion();
     gesto = NO_GESTO;
     empezarGesto = 0;
     identificador = false;
+	Prueba prueba(visualizacion);
+	p = prueba;
 }
 
 
@@ -96,6 +99,9 @@ void Kinect::procesarGestos()
                             if ( valoresGestos[MOVER_DERECHA].getGestoProgreso() == valoresGestos[MOVER_DERECHA].getGestoCompleto() )
                             {
                                 std::cout << "mover derecha" << std::endl;
+								if (p.realizoGesto(MOVER_DERECHA)){
+									visualizacion->moverHorizontal(true);
+								}
                                 reiniciarGestos();
                             }
                         }
@@ -111,6 +117,9 @@ void Kinect::procesarGestos()
                             if ( valoresGestos[MOVER_IZQUIERDA].getGestoProgreso() == valoresGestos[MOVER_IZQUIERDA].getGestoCompleto() )
                             {
                                 std::cout << "mover izquierda" << std::endl;
+								if (p.realizoGesto(MOVER_IZQUIERDA)){
+									visualizacion->moverHorizontal(false);
+								}
                                 reiniciarGestos();
                             }
                         }
@@ -126,6 +135,9 @@ void Kinect::procesarGestos()
                             if ( valoresGestos[MOVER_ARRIBA].getGestoProgreso() == valoresGestos[MOVER_ARRIBA].getGestoCompleto() )
                             {
                                 std::cout << "mover arriba" << std::endl;
+								if (p.realizoGesto(MOVER_ARRIBA)){
+									visualizacion->moverVertical(true);
+								}
                                 reiniciarGestos();
                             }
                         }
@@ -141,6 +153,9 @@ void Kinect::procesarGestos()
                             if ( valoresGestos[MOVER_ABAJO].getGestoProgreso() == valoresGestos[MOVER_ABAJO].getGestoCompleto() )
                             {
                                 std::cout << "mover abajo" << std::endl;
+								if (p.realizoGesto(MOVER_ABAJO)){
+									visualizacion->moverVertical(false);
+								}
                                 reiniciarGestos();
                             }
                         }
@@ -170,6 +185,9 @@ void Kinect::procesarGestos()
                                 if ( valoresGestos[ZOOM_IN].getGestoProgreso() == valoresGestos[ZOOM_IN].getGestoCompleto() )
                                 {
                                     std::cout << "zoom in" << std::endl;
+									if (p.realizoGesto(ZOOM_IN)){
+										visualizacion->zoom(true);
+									}
                                     reiniciarGestos();
                                 }
                             }
@@ -183,6 +201,9 @@ void Kinect::procesarGestos()
                                 if ( valoresGestos[ZOOM_OUT].getGestoProgreso() == valoresGestos[ZOOM_OUT].getGestoCompleto() )
                                 {
                                     std::cout << "zoom out" << std::endl;
+									if (p.realizoGesto(ZOOM_OUT)){
+										visualizacion->zoom(false);
+									}
                                     reiniciarGestos();
                                 }
                             }
@@ -207,6 +228,9 @@ void Kinect::procesarGestos()
                                 if ( valoresGestos[ROTAR_IZQUIERDA].getGestoProgreso() == valoresGestos[ROTAR_IZQUIERDA].getGestoCompleto() )
                                 {
                                     std::cout << "rotar izquierda\n";
+									if (p.realizoGesto(ROTAR_IZQUIERDA)){
+										visualizacion->rotarHorizontal(false);
+									}
                                     reiniciarGestos();
                                 }
                             }
@@ -220,6 +244,9 @@ void Kinect::procesarGestos()
                                 if ( valoresGestos[ROTAR_DERECHA].getGestoProgreso() == valoresGestos[ROTAR_DERECHA].getGestoCompleto() )
                                 {
                                     std::cout << "rotar derecha\n";
+									if (p.realizoGesto(ROTAR_DERECHA)){
+										visualizacion->rotarHorizontal(true);
+									}
                                     reiniciarGestos();
                                 }
                             }
@@ -233,6 +260,9 @@ void Kinect::procesarGestos()
                                 if ( valoresGestos[ROTAR_ARRIBA].getGestoProgreso() == valoresGestos[ROTAR_ARRIBA].getGestoCompleto() )
                                 {
                                     std::cout << "rotar arriba\n";
+									if (p.realizoGesto(ROTAR_ARRIBA)){
+										visualizacion->rotarVertical(true);
+									}
                                     reiniciarGestos();
                                 }
                             }
@@ -246,6 +276,9 @@ void Kinect::procesarGestos()
                                 if ( valoresGestos[ROTAR_ABAJO].getGestoProgreso() == valoresGestos[ROTAR_ABAJO].getGestoCompleto() )
                                 {
                                     std::cout << "rotar abajo\n";
+									if (p.realizoGesto(ROTAR_ABAJO)){
+										visualizacion->rotarVertical(true);
+									}
                                     reiniciarGestos();
                                 }
                             }
@@ -254,6 +287,7 @@ void Kinect::procesarGestos()
                 }
                 if ( gesto == MANO_DERECHA_ARRIBA )
                 {
+                    visualizacion->activarDeformacion ( true );
                     convertirCoordenadas ( manoDerecha.x, manoDerecha.y );
                 }
                 if ( manoDerecha.y < 0 && manoIzquierda.y < 0 )
@@ -316,6 +350,7 @@ void Kinect::deteccion()
     if ( WAIT_OBJECT_0 == WaitForSingleObject ( m_hNextSkeletonEvent, 0 ) )
     {
         procesarGestos();
+        // Sleep ( 3000 );
     }
 }
 
@@ -326,16 +361,15 @@ void Kinect::inicializar()
         std::cout << "Kinect no esta conectado";
         return;
     }
+    visualizacion->mostrarObjetoInicial ( );
     this->asignarValoresGestos();
+	p.empezarGesto();
     while ( true )
     {
         this->deteccion();
     }
 }
 
-void Kinect::deformar()
-{
-}
 
 bool Kinect::inicializarKinect()
 {
@@ -394,4 +428,5 @@ void Kinect::convertirCoordenadas ( double x, double y )
 {
     x = ( ( x ) * 22 ) / 1;
     y = ( ( y ) * 11 ) / 1;
+    visualizacion->ubicacionEsferaDeformacion ( x, y );
 }

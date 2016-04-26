@@ -1,7 +1,9 @@
 #include "Kinect.h"
+#include "Prueba.h"
 
 int main(){
-	std::cout << "hola";
+	Kinect k;
+	k.inicializar();
 	return 0;
 
 }
