@@ -8,6 +8,7 @@
 
 #include "ManejadorGestos.h"
 #include "Prueba.h"
+#include "../Modelo/Deformacion.h"
 
 
 class Kinect
@@ -17,12 +18,14 @@ public:
     ~Kinect();
     void inicializar();
 private:
-	Prueba p;
+    Prueba p;
     int empezarGesto;
+    bool repeler;
     GESTO gesto;
     INuiSensor* sensor;
     HANDLE m_hNextSkeletonEvent;
     Visualizacion *visualizacion;
+    Deformacion *deformacion;
     bool identificador;
     float distanciaInicial;
     float inicialDerechaY;

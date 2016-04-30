@@ -1,5 +1,4 @@
-#include "Kinect.h"
-#include "Prueba.h"
+#include "Controlador\Kinect.h"
 
 int main(){
 	Kinect k;
