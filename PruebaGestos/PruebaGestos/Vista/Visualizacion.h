@@ -36,6 +36,7 @@ public:
     void cambioDeformacion ( bool repeler );
     void actualizarVentana ( vtkPolyData* p );
     double* puntoCercano ( double x, double y );
+	void reestablecer();
 private:
     int holguraX;
     int holguraY;

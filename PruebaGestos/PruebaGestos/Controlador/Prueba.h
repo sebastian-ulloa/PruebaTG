@@ -44,6 +44,7 @@ public:
     bool realizoGesto ( bool accion );
     void empezarGesto();
 private:
+	int npruebas;
     bool repeler;
     bool deformar;
     Visualizacion *v;
@@ -57,6 +58,7 @@ private:
     GESTO agregarGesto ( int g );
     int generarGesto();
     void guardarArchivo();
+	void reiniciar();
 
 };
 

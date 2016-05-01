@@ -187,3 +187,10 @@ void Visualizacion::actualizarVentana ( vtkPolyData* p )
     polydata->ShallowCopy ( p );
     ventana->Render();
 }
+
+void Visualizacion::reestablecer(){
+	actor->SetPosition(0, 0, 0);
+	renderer->ResetCamera();
+	renderer->GetActiveCamera()->SetPosition(0, 0, 40);
+	ventana->Render();
+}
