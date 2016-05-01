@@ -35,7 +35,7 @@ bool Prueba::realizoGesto(GESTO g)
 	{
 		tiempos.push_back(clock() - inicio);
 		contador = 0;
-		if (gestosRealizados.size() < 10)
+		if (gestosRealizados.size() <= 10)
 		{
 			actual = agregarGesto(generarGesto());
 			v->textoPrueba(nombreGestoActual);
