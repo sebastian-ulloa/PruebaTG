@@ -2,6 +2,7 @@
 
 Visualizacion::Visualizacion()
 {
+    polydataInicial = vtkSmartPointer<vtkPolyData>::New();
     esferaDeformar = vtkSmartPointer<vtkSphereSource>::New();
     actor = vtkSmartPointer<vtkActor>::New();
     actorEsfera = vtkSmartPointer<vtkActor>::New();
@@ -25,10 +26,10 @@ Visualizacion::Visualizacion()
     textGesto->GetTextProperty()->SetBold ( 0 );
     textGesto->GetTextProperty()->SetFontSize ( 26 );
     textGesto->GetTextProperty()->SetColor ( 0.0, 0.0, 0.0 );
-    textPrueba->SetPosition ( 1000, 640 );
+    textPrueba->SetPosition ( 950, 640 );
     textPrueba->GetTextProperty()->SetBold ( 1 );
-    textPrueba->GetTextProperty()->SetFontSize ( 26 );
-    textPrueba->GetTextProperty()->SetColor ( 0.0, 0.0, 0.0 );
+    textPrueba->GetTextProperty()->SetFontSize ( 30 );
+    textPrueba->GetTextProperty()->SetColor ( 1.0, 0.0, 0.0 );
 }
 
 Visualizacion::~Visualizacion()
@@ -37,6 +38,7 @@ Visualizacion::~Visualizacion()
 
 void Visualizacion::mostrarObjetoInicial ( vtkPolyData * polydata )
 {
+    polydataInicial->ShallowCopy ( polydata );
     this->polydata = polydata;
     mapper->SetInputData ( polydata );
     actor->SetMapper ( mapper );
@@ -104,17 +106,17 @@ void Visualizacion::rotarVertical ( bool direccion )
     {
         factor = -45;
     }
-    actor->RotateY ( factor );
+    actor->RotateWXYZ ( factor, 1, 0, 0 );
     ventana->Render();
 }
 void Visualizacion::rotarHorizontal ( bool direccion )
 {
-    double factor = 45;
+    double factor = -45;
     if ( direccion )
     {
-        factor = -45;
+        factor = 45;
     }
-    actor->RotateX ( factor );
+    actor->RotateWXYZ ( factor, 0, 1, 0 );
     ventana->Render();
 }
 
@@ -188,9 +190,11 @@ void Visualizacion::actualizarVentana ( vtkPolyData* p )
     ventana->Render();
 }
 
-void Visualizacion::reestablecer(){
-	actor->SetPosition(0, 0, 0);
-	renderer->ResetCamera();
-	renderer->GetActiveCamera()->SetPosition(0, 0, 40);
-	ventana->Render();
+void Visualizacion::reestablecer()
+{
+    polydata->ShallowCopy ( polydataInicial );
+    actor->SetPosition ( 0, 0, 0 );
+    renderer->ResetCamera();
+    renderer->GetActiveCamera()->SetPosition ( 0, 0, 40 );
+    ventana->Render();
 }

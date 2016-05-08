@@ -36,11 +36,12 @@ public:
     void cambioDeformacion ( bool repeler );
     void actualizarVentana ( vtkPolyData* p );
     double* puntoCercano ( double x, double y );
-	void reestablecer();
+    void reestablecer();
 private:
     int holguraX;
     int holguraY;
     vtkSmartPointer<vtkPolyData> polydata;
+    vtkSmartPointer<vtkPolyData> polydataInicial;
     vtkSmartPointer<vtkSphereSource> esferaDeformar;
     vtkSmartPointer<vtkRenderer> renderer;
     vtkSmartPointer<vtkPolyDataMapper> mapper;
